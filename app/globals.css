@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-libre-baskerville), Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) * 0.7);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.4);
+  --radius-xl: calc(var(--radius) * 2);
+}
+
+:root {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #073b7a;
+  --card: #ffffff;
+  --card-foreground: #073b7a;
+  --primary: #0c9f9a;
+  --primary-foreground: #ffffff;
+  --secondary: #e8f7f6;
+  --secondary-foreground: #073b7a;
+  --muted: #e8f7f6;
+  --muted-foreground: #3e617b;
+  --accent: #073b7a;
+  --accent-foreground: #ffffff;
+  --info: #e8f7f6;
+  --info-foreground: #073b7a;
+  --border: #cce8e7;
+  --input: #cce8e7;
+  --ring: #0c9f9a;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button,
+  a {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring;
+  }
+  button {
+    cursor: pointer;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  :target {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@layer components {
+  .hero-visual {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
