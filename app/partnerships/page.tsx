@@ -8,12 +8,17 @@ import {
   Package,
   BadgeCheck,
   Headset,
+  Download,
 } from 'lucide-react'
 import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Button } from '@/components/ui/button'
-import { CONDITION_FILTERS } from '@/lib/content'
+import {
+  CONDITION_FILTERS,
+  PRODUCT_CATALOG_FILENAME,
+  PRODUCT_CATALOG_HREF,
+} from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'For Distributors',
@@ -83,9 +88,15 @@ export default function PartnershipsPage() {
                 variant="outline"
                 className="border-accent-foreground/40 bg-transparent text-accent-foreground hover:bg-accent-foreground hover:text-accent"
                 nativeButton={false}
-                render={<Link href="/therapies" />}
+                render={
+                  <a
+                    href={PRODUCT_CATALOG_HREF}
+                    download={PRODUCT_CATALOG_FILENAME}
+                  />
+                }
               >
-                Browse Medicines
+                <Download className="h-4 w-4" aria-hidden="true" />
+                Download Product Catalog
               </Button>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Libre_Baskerville } from 'next/font/google'
+import { WhatsAppFloat } from '@/components/whatsapp-float'
 import './globals.css'
 
 const geistSans = Geist({
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-scroll-behavior="smooth" className="bg-background">
       <body className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} font-sans antialiased`}>
         {children}
+        <WhatsAppFloat />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

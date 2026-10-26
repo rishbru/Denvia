@@ -11,9 +11,16 @@ import {
   Activity,
   Sparkles,
   ArrowRight,
+  Download,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { CONDITION_FILTERS, MEDICINES, PORTFOLIO_DEVELOPMENT } from '@/lib/content'
+import {
+  CONDITION_FILTERS,
+  MEDICINES,
+  PORTFOLIO_DEVELOPMENT,
+  PRODUCT_CATALOG_FILENAME,
+  PRODUCT_CATALOG_HREF,
+} from '@/lib/content'
 
 const conditionIcons: Record<string, typeof Pill> = {
   All: Pill,
@@ -66,19 +73,36 @@ export function TherapiesPreview({
       className="scroll-mt-24 border-t border-border bg-background"
     >
       <div className="mx-auto max-w-6xl px-6 pt-12 md:pt-16">
-        <div className="max-w-2xl">
-          {showFullPageHeader ? (
-            <h1 className="text-balance font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-              Medicines
-            </h1>
-          ) : (
-            <h2 className="text-balance font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl">
-              Medicines
-            </h2>
-          )}
-          <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Search by composition or filter by condition.
-          </p>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            {showFullPageHeader ? (
+              <h1 className="text-balance font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+                Medicines
+              </h1>
+            ) : (
+              <h2 className="text-balance font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl">
+                Medicines
+              </h2>
+            )}
+            <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Search by composition or filter by condition.
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="lg"
+            className="shrink-0 self-start sm:self-auto"
+            nativeButton={false}
+            render={
+              <a
+                href={PRODUCT_CATALOG_HREF}
+                download={PRODUCT_CATALOG_FILENAME}
+              />
+            }
+          >
+            <Download aria-hidden="true" />
+            Download Product Catalog
+          </Button>
         </div>
 
         <div className="relative mt-8">

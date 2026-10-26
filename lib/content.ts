@@ -1,3 +1,14 @@
+/** Static product catalog served from /public/catalog */
+export const PRODUCT_CATALOG_HREF = '/catalog/Denvia_Medicines_Catalog.pdf'
+export const PRODUCT_CATALOG_FILENAME = 'Denvia_Medicines_Catalog.pdf'
+
+/** Temporary WhatsApp Business number — replace when the official line is ready */
+export const WHATSAPP_E164 = '918296682121'
+export const WHATSAPP_DISPLAY = '+91 82966 82121'
+export const WHATSAPP_PREFILL =
+  "Hello, I'd like to know more about Denvia Pharmaceuticals."
+export const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_E164}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`
+
 export type Medicine = {
   id: string
   slug: string

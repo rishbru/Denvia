@@ -1,6 +1,7 @@
-import { ArrowRight, Phone, Mail } from 'lucide-react'
+import { ArrowRight, Phone, Mail, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { WHATSAPP_DISPLAY, WHATSAPP_HREF } from '@/lib/content'
 
 export function ContactTeaser() {
   return (
@@ -30,6 +31,15 @@ export function ContactTeaser() {
             >
               <Phone className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
               +91 80 4123 5600
+            </a>
+            <a
+              href={WHATSAPP_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 transition-colors hover:text-primary"
+            >
+              <MessageCircle className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+              WhatsApp {WHATSAPP_DISPLAY}
             </a>
           </div>
         </div>

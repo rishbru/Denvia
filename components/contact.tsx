@@ -2,14 +2,22 @@
 
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Mail, Phone, MapPin, Check, Pill, ExternalLink } from 'lucide-react'
+import { Mail, Phone, MapPin, Check, Pill, ExternalLink, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { WHATSAPP_DISPLAY, WHATSAPP_HREF } from '@/lib/content'
 
 const CONTACT_EMAIL = 'partnerships@denvia.com'
 
 const details = [
   { icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
   { icon: Phone, label: 'Phone', value: '+91 80 4123 5600', href: 'tel:+918041235600' },
+  {
+    icon: MessageCircle,
+    label: 'WhatsApp',
+    value: WHATSAPP_DISPLAY,
+    href: WHATSAPP_HREF,
+    external: true,
+  },
   { icon: MapPin, label: 'Headquarters', value: 'Bengaluru, Karnataka, India' },
 ]
 
@@ -124,7 +132,13 @@ export function Contact() {
                   </dt>
                   <dd className="mt-0.5 text-sm font-medium text-accent-foreground">
                     {d.href ? (
-                      <a href={d.href} className="transition-colors hover:text-primary">
+                      <a
+                        href={d.href}
+                        className="transition-colors hover:text-primary"
+                        {...('external' in d && d.external
+                          ? { target: '_blank', rel: 'noopener noreferrer' }
+                          : {})}
+                      >
                         {d.value}
                       </a>
                     ) : (
