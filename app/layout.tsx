@@ -18,9 +18,12 @@ const libreBaskerville = Libre_Baskerville({
 })
 
 export const metadata: Metadata = {
-  title: 'Denvia | Focused medicines, dependable access',
+  title: {
+    default: 'Denvia Pharmaceuticals | Trusted Medicines, Dependable Access',
+    template: '%s | Denvia Pharmaceuticals',
+  },
   description:
-    'Denvia develops and commercialises a focused portfolio of medicines for clinical practice, pairing responsible quality with dependable access.',
+    'Denvia Pharmaceuticals delivers prescription medicines across Cardiac, Pain, and Neuro care from Bengaluru, India.',
   generator: 'v0.app',
   icons: { icon: '/images/denvia-logo.jpg' },
 }
@@ -35,7 +38,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="bg-background">
+    <html lang="en" data-scroll-behavior="smooth" className="bg-background">
       <body className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} font-sans antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

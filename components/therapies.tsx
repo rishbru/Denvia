@@ -42,7 +42,7 @@ export function Therapies() {
             </h2>
           </div>
           <p className="max-w-sm text-pretty text-sm leading-relaxed text-muted-foreground">
-            Each area is chosen deliberately and supported end to end — from
+            Each area is chosen deliberately and supported end to end, from
             formulation and quality to professional service and access.
           </p>
         </div>

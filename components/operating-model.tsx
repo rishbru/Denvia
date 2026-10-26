@@ -2,7 +2,7 @@ import { OPERATING_MODEL_STEPS, OPERATING_SENTENCE } from '@/lib/content'
 
 export function OperatingModel() {
   return (
-    <section className="border-t border-border bg-background">
+    <section id="operating-model" className="scroll-mt-36 border-t border-border bg-background">
       <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <p className="max-w-3xl text-pretty font-serif text-xl leading-snug tracking-tight text-foreground sm:text-2xl">
           {OPERATING_SENTENCE}

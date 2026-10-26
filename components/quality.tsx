@@ -10,7 +10,7 @@ const points = [
 
 export function Quality() {
   return (
-    <section id="quality" className="border-t border-border">
+    <section id="quality" className="scroll-mt-36 border-t border-border">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-2 md:py-28">
         <div className="order-2 overflow-hidden rounded-xl border border-border shadow-sm md:order-1">
           <Image
@@ -31,7 +31,7 @@ export function Quality() {
             Controls that protect every batch.
           </h2>
           <p className="mt-5 text-pretty leading-relaxed text-muted-foreground">
-            Our role is to make the product journey visible and accountable —
+            Our role is to make the product journey visible and accountable,
             from partner selection and testing through release, reporting and
             ongoing safety monitoring.
           </p>

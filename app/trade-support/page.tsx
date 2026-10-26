@@ -1,24 +1,31 @@
+import type { Metadata } from 'next'
 import { Package, BadgeCheck, Headset, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Button } from '@/components/ui/button'
 
+export const metadata: Metadata = {
+  title: 'Trade Support',
+  description:
+    'Order coordination, pack and MRP clarity, and supply support for Denvia stockists and distributors.',
+}
+
 const offerings = [
   {
     icon: Package,
-    title: 'Current portfolio access',
-    body: 'Up-to-date visibility of the active portfolio across all five therapeutic divisions, by division and by pack.',
+    title: 'Portfolio Visibility',
+    body: 'Browse Cardiac, Pain, and Neuro formulations with exact strengths and dosage forms.',
   },
   {
     icon: BadgeCheck,
-    title: 'Verified pack & MRP information',
-    body: 'Pack sizes and maximum retail price are confirmed against current documentation, so stock and billing stay accurate.',
+    title: 'Pack & MRP Clarity',
+    body: 'Clear pack sizes, documentation, and batch traceability for stock and billing.',
   },
   {
     icon: Headset,
-    title: 'Ordering & escalation support',
-    body: 'A direct line for order placement queries, supply questions and escalation when something needs attention quickly.',
+    title: 'Order & Supply Support',
+    body: 'Direct coordination with our commercial team for orders, dispatch, and territory questions.',
   },
 ]
 
@@ -28,66 +35,65 @@ export default function TradeSupportPage() {
       <SiteHeader />
       <main>
         <section className="border-b border-accent-foreground/15 bg-accent text-accent-foreground">
-          <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-            <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary">
-              For stockists, distributors & pharmacies
+          <div className="mx-auto max-w-6xl px-6 py-14 md:py-18">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              For Stockists, Distributors &amp; Pharmacies
             </p>
-            <h1 className="mt-4 max-w-2xl text-balance font-serif text-4xl leading-tight tracking-tight text-accent-foreground sm:text-5xl">
-              Trade Support
+            <h1 className="mt-3 max-w-2xl text-balance font-serif text-3xl leading-tight tracking-tight text-accent-foreground sm:text-4xl lg:text-5xl">
+              Trade support for our distribution partners.
             </h1>
-            <p className="mt-5 max-w-2xl text-pretty leading-relaxed text-accent-foreground/75">
-              Dependable availability depends on dependable partners. Trade
-              Support is where stockists, distributors and pharmacies get
-              the current portfolio, ordering support and a direct
-              escalation route.
+            <p className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-accent-foreground/85">
+              Whether you are placing an order or exploring a regional partnership, we keep
+              working with Denvia simple and reliable.
             </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Button size="lg" nativeButton={false} render={<Link href="/partnerships" />}>
+                Distributor &amp; PCD Partnerships
+                <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-accent-foreground/40 bg-transparent text-accent-foreground hover:bg-accent-foreground hover:text-accent"
+                nativeButton={false}
+                render={<Link href="/therapies" />}
+              >
+                Browse Medicines
+              </Button>
+            </div>
           </div>
         </section>
 
         <section className="border-b border-border">
-          <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+          <div className="mx-auto max-w-6xl px-6 py-14 md:py-18">
             <div className="grid gap-6 md:grid-cols-3">
               {offerings.map((item) => (
-                <div key={item.title} className="rounded-xl border border-border bg-card p-7">
+                <div key={item.title} className="rounded-xl border border-border bg-card p-6 shadow-2xs">
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <item.icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <h2 className="mt-6 font-serif text-lg text-card-foreground">{item.title}</h2>
+                  <h2 className="mt-5 font-serif text-lg font-bold text-card-foreground">{item.title}</h2>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
                 </div>
               ))}
             </div>
-          </div>
-        </section>
 
-        <section className="border-b border-border bg-secondary/40">
-          <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-6 py-14 md:flex-row md:items-center">
-            <div className="max-w-xl">
-              <h2 className="font-serif text-2xl leading-snug tracking-tight text-foreground sm:text-3xl">
-                Become a Denvia stockist or distributor.
-              </h2>
-              <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
-                New trade partnerships go through a short evaluation process
-                covering territory, capacity and current lines carried.
+            <div className="mt-12 max-w-2xl border-t border-border pt-8">
+              <h2 className="font-serif text-xl text-foreground">Need help with an order?</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Share your territory, product interest, and preferred contact number. Our team
+                will follow up on stock availability and next steps.
               </p>
+              <Button
+                className="mt-5"
+                variant="outline"
+                nativeButton={false}
+                render={<Link href="/contact?topic=partnership" />}
+              >
+                Contact trade support
+                <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+              </Button>
             </div>
-            <Button size="lg" nativeButton={false} render={<Link href="/partnerships" />}>
-              Apply for a trade partnership
-              <ArrowRight className="ml-1 h-4 w-4" />
-            </Button>
-          </div>
-        </section>
-
-        <section>
-          <div className="mx-auto max-w-6xl px-6 py-14">
-            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Existing trade partners with an order, supply or billing query
-              can reach our team directly through{' '}
-              <Link href="/contact?topic=trade-support" className="text-primary underline underline-offset-2">
-                Contact
-              </Link>
-              .
-            </p>
           </div>
         </section>
       </main>
