@@ -4,29 +4,23 @@ import { MapPin, ShieldCheck } from 'lucide-react'
 
 const groups = [
   {
-    title: 'Browse Medicines',
+    title: 'Medicines',
     links: [
       { label: 'All Medicines', href: '/therapies' },
-      { label: 'Heart & Cholesterol', href: '/therapies?condition=Heart+%26+Angina' },
-      { label: 'Pain & Muscle Spasm', href: '/therapies?condition=Pain+%26+Mobility' },
-      { label: 'Nerve Care', href: '/therapies?condition=Nerve+%26+Nutritional+Care' },
+      { label: 'Cardiac', href: '/therapies?condition=Cardiac' },
+      { label: 'Pain Management', href: '/therapies?condition=Pain+Management' },
+      { label: 'Antibiotic', href: '/therapies?condition=Antibiotic' },
+      { label: 'Respiratory', href: '/therapies?condition=Respiratory' },
+      { label: 'Gastro', href: '/therapies?condition=Gastro' },
     ],
   },
   {
-    title: 'Company & Partners',
+    title: 'Company',
     links: [
-      { label: 'About', href: '/#about' },
-      { label: 'Board of Directors', href: '/board-of-directors' },
-      { label: 'For Distributors & PCD', href: '/partnerships' },
+      { label: 'Who We Are', href: '/about' },
+      { label: 'Board of Directors', href: '/about/#board' },
+      { label: 'Why Partner with Us', href: '/partnerships' },
       { label: 'Contact Us', href: '/contact' },
-    ],
-  },
-  {
-    title: 'Quality & Safety',
-    links: [
-      { label: 'Medical Information', href: '/medical-information' },
-      { label: 'Patient Safety', href: '/patient-safety' },
-      { label: 'Trade Support', href: '/trade-support' },
     ],
   },
 ]
@@ -35,27 +29,30 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-accent-foreground/15 bg-accent text-accent-foreground">
       <div className="mx-auto max-w-6xl px-6 py-12">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1fr] lg:items-start">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1fr] lg:gap-8">
           <div>
-            <Link href="/" className="inline-block" aria-label="Denvia home">
+            <Link href="/" className="inline-flex items-center gap-3" aria-label="Denvia home">
               <Image
                 src="/images/denvia-mark.jpg"
-                alt="Denvia Pharmaceuticals"
+                alt=""
                 width={132}
                 height={100}
-                className="h-auto w-20 rounded-md"
+                className="h-auto w-14 rounded-md"
               />
+              <span className="font-serif text-lg leading-tight tracking-tight text-accent-foreground">
+                Denvia Pharmaceuticals
+              </span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-accent-foreground/80">
-              Prescription medicines for Cardiac, Pain, and Neuro care—with clear quality standards and dependable access across India.
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-accent-foreground/80">
+              Making high-quality prescription medicine accessible, reliable, and affordable across India.
             </p>
-            <div className="mt-4 flex flex-col gap-1.5 text-xs text-accent-foreground/70">
-              <span className="inline-flex items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+            <div className="mt-5 flex flex-col gap-2 text-sm text-accent-foreground/75">
+              <span className="inline-flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-primary" aria-hidden="true" />
                 Bengaluru, Karnataka, India
               </span>
-              <span className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+              <span className="inline-flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
                 WHO-GMP manufacturing partners
               </span>
             </div>

@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 
 export default function TherapiesPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex min-h-screen flex-1 flex-col bg-background">
       <SiteHeader />
-      <main>
+      <main className="flex-1">
         <Suspense fallback={null}>
           <TherapiesPreview showFullPageHeader />
         </Suspense>

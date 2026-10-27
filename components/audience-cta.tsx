@@ -1,35 +1,31 @@
-import { Stethoscope, Truck, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Building2, Truck, ArrowRight, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 const audiences = [
   {
     icon: Truck,
-    label: 'For Distributors, Stockists & PCD Partners',
+    label: 'For distributors and stockists',
     title: 'Grow with a dependable, high-demand medicine portfolio.',
-    body: 'Work with us on Cardiac, Pain, and Neuro formulations—with clear MRP/pack documentation and responsive supply support.',
     highlights: [
-      'Regional PCD & stockist opportunities',
-      'High-demand chronic & acute lines',
-      'Direct onboarding & supply support',
+      'Regional PCD and stockist opportunities',
+      'Clear terms and verified documentation',
     ],
     href: '/partnerships',
-    cta: 'Explore Distributor Partnerships',
+    cta: 'Why Partner with Us',
     primary: true,
   },
   {
-    icon: Stethoscope,
-    label: 'For Doctors & Healthcare Professionals',
-    title: 'Clear, verifiable formulation details for everyday clinical practice.',
-    body: 'Every medicine lists exact composition, dosage form, and strength—so prescribing decisions stay clear and practical.',
+    icon: Building2,
+    label: 'The company',
+    title: 'Safe, effective prescription medicines, made to a high standard.',
     highlights: [
-      'Exact composition, release type & strength',
-      'Product literature on request',
-      'Direct medical enquiry support',
+      'Hospitals, pharmacies, and clinics across India',
+      'Board of Directors',
     ],
-    href: '/medical-information',
-    cta: 'View Prescriber Information',
-    primary: false,
+    href: '/about',
+    cta: 'Who We Are',
+    primary: true,
   },
 ]
 
@@ -42,7 +38,7 @@ export function AudienceCta() {
             Who We Serve
           </p>
           <h2 className="mt-2.5 text-balance font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl">
-            Built for the people who keep healthcare moving.
+            Distributors, stockists, and the company.
           </h2>
         </div>
 
@@ -65,9 +61,6 @@ export function AudienceCta() {
                 <h3 className="mt-5 font-serif text-xl leading-snug text-card-foreground sm:text-2xl">
                   {audience.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {audience.body}
-                </p>
 
                 <ul className="mt-5 space-y-2 border-t border-border pt-4">
                   {audience.highlights.map((h) => (

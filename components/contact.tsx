@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin, Check, Pill, ExternalLink, MessageCircle } from 'l
 import { Button } from '@/components/ui/button'
 import { WHATSAPP_DISPLAY, WHATSAPP_HREF } from '@/lib/content'
 
-const CONTACT_EMAIL = 'partnerships@denvia.com'
+const CONTACT_EMAIL = 'info@denviapharma.com'
 
 const details = [
   { icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
@@ -23,7 +23,7 @@ const details = [
 
 const topicCopy: Record<string, { label: string; heading: string; placeholder: string; subject: string; note?: string }> = {
   partnership: {
-    label: 'Distributor & PCD Partnership',
+    label: 'Why Partner with Us',
     heading: 'Start a conversation with our commercial team.',
     placeholder:
       'Tell us your location/territory, business type (Stockist / PCD / Pharmacy), and the medicines you are interested in…',
@@ -99,22 +99,22 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="border-t border-accent-foreground/15 bg-accent text-accent-foreground">
+    <section id="contact" className="bg-background text-foreground">
       <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
             {topic ? topic.label : 'Get in Touch'}
           </p>
-          <h1 className="mt-3 text-balance font-serif text-3xl leading-tight tracking-tight text-accent-foreground sm:text-4xl">
+          <h1 className="mt-3 text-balance font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl">
             {topic ? topic.heading : "We'd love to hear from you."}
           </h1>
-          <p className="mt-4 max-w-md text-pretty text-sm leading-relaxed text-accent-foreground/85 sm:text-base">
+          <p className="mt-4 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
             {topic?.note ??
               'Whether you are a distributor, stockist, doctor, or manufacturing partner, our team in Bengaluru is ready to assist you promptly and personally.'}
           </p>
 
           {selectedMedicine && (
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/15 px-4 py-2 text-xs font-semibold text-accent-foreground">
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold text-foreground">
               <Pill className="h-4 w-4 text-primary" aria-hidden="true" />
               <span>Enquiring about: {selectedMedicine}</span>
             </div>
@@ -123,14 +123,14 @@ export function Contact() {
           <dl className="mt-8 space-y-5">
             {details.map((d) => (
               <div key={d.label} className="flex items-start gap-4">
-                <span className="inline-flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-accent-foreground/10 text-primary">
+                <span className="inline-flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <d.icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <dt className="text-xs font-semibold uppercase tracking-wide text-accent-foreground/65">
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     {d.label}
                   </dt>
-                  <dd className="mt-0.5 text-sm font-medium text-accent-foreground">
+                  <dd className="mt-0.5 text-sm font-medium text-foreground">
                     {d.href ? (
                       <a
                         href={d.href}

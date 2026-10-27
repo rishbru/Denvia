@@ -2,23 +2,19 @@ import { Suspense } from 'react'
 import { SiteHeader } from '@/components/site-header'
 import { Hero } from '@/components/hero'
 import { TherapiesPreview } from '@/components/therapies-preview'
-import { About } from '@/components/about'
 import { AudienceCta } from '@/components/audience-cta'
-import { ContactTeaser } from '@/components/contact-teaser'
 import { SiteFooter } from '@/components/site-footer'
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex min-h-screen flex-1 flex-col bg-background">
       <SiteHeader />
-      <main>
+      <main className="flex-1">
         <Hero />
         <Suspense fallback={null}>
           <TherapiesPreview />
         </Suspense>
-        <About />
         <AudienceCta />
-        <ContactTeaser />
       </main>
       <SiteFooter />
     </div>

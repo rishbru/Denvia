@@ -40,7 +40,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className="bg-background">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} font-sans antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} flex min-h-screen flex-col font-sans antialiased`}>
         {children}
         <WhatsAppFloat />
         {process.env.NODE_ENV === 'production' && <Analytics />}

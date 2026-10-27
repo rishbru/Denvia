@@ -7,29 +7,44 @@ import {
   Search,
   X,
   Pill,
-  HeartPulse,
-  Activity,
-  Sparkles,
-  ArrowRight,
   Download,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   CONDITION_FILTERS,
   MEDICINES,
-  PORTFOLIO_DEVELOPMENT,
-  PRODUCT_CATALOG_FILENAME,
-  PRODUCT_CATALOG_HREF,
+  type Medicine,
 } from '@/lib/content'
 
-const conditionIcons: Record<string, typeof Pill> = {
-  All: Pill,
-  'Heart & Angina': HeartPulse,
-  'Pain & Mobility': Activity,
-  'Nerve & Nutritional Care': Sparkles,
+const VALID_CONDITIONS = new Set(CONDITION_FILTERS.map((f) => f.id))
+
+function csvCell(value: string) {
+  return `"${value.replace(/"/g, '""')}"`
 }
 
-const VALID_CONDITIONS = new Set(CONDITION_FILTERS.map((f) => f.id))
+function downloadCategoryList(category: string) {
+  const rows: Medicine[] =
+    category === 'All' ? MEDICINES : MEDICINES.filter((medicine) => medicine.category === category)
+  const lines = [
+    ['Product', 'Content', 'Category', 'Available Strengths'],
+    ...rows.map((medicine) => [
+      medicine.name,
+      medicine.specification,
+      medicine.category,
+      medicine.strengths.join('; '),
+    ]),
+  ]
+  const csv = lines.map((line) => line.map(csvCell).join(',')).join('\r\n')
+  const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  const filename =
+    category === 'All' ? 'Denvia-all-medicines.csv' : `Denvia-${category.replace(/\s+/g, '-')}.csv`
+  link.href = url
+  link.download = filename
+  link.click()
+  URL.revokeObjectURL(url)
+}
 
 export function TherapiesPreview({
   showFullPageHeader = false,
@@ -53,16 +68,14 @@ export function TherapiesPreview({
     const q = search.trim().toLowerCase()
     return MEDICINES.filter((med) => {
       const matchesCondition =
-        selectedCondition === 'All' || med.conditionGroup === selectedCondition
+        selectedCondition === 'All' || med.category === selectedCondition
       if (!matchesCondition) return false
       if (!q) return true
       return (
         med.name.toLowerCase().includes(q) ||
-        med.fullTitle.toLowerCase().includes(q) ||
-        med.conditionTag.toLowerCase().includes(q) ||
-        med.therapeuticCategory.toLowerCase().includes(q) ||
-        med.clinicalUse.toLowerCase().includes(q) ||
-        med.strengths.some((s) => s.toLowerCase().includes(q))
+        med.specification.toLowerCase().includes(q) ||
+        med.category.toLowerCase().includes(q) ||
+        med.strengths.some((strength) => strength.toLowerCase().includes(q))
       )
     })
   }, [search, selectedCondition])
@@ -73,8 +86,7 @@ export function TherapiesPreview({
       className="scroll-mt-24 border-t border-border bg-background"
     >
       <div className="mx-auto max-w-6xl px-6 pt-12 md:pt-16">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-2xl">
+        <div className="max-w-2xl">
             {showFullPageHeader ? (
               <h1 className="text-balance font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
                 Medicines
@@ -84,26 +96,7 @@ export function TherapiesPreview({
                 Medicines
               </h2>
             )}
-            <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Search by composition or filter by condition.
-            </p>
           </div>
-          <Button
-            variant="outline"
-            size="lg"
-            className="shrink-0 self-start sm:self-auto"
-            nativeButton={false}
-            render={
-              <a
-                href={PRODUCT_CATALOG_HREF}
-                download={PRODUCT_CATALOG_FILENAME}
-              />
-            }
-          >
-            <Download aria-hidden="true" />
-            Download Product Catalog
-          </Button>
-        </div>
 
         <div className="relative mt-8">
           <label htmlFor="medicine-search" className="sr-only">
@@ -118,7 +111,7 @@ export function TherapiesPreview({
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="e.g. Rosuvastatin, Aceclofenac, angina…"
+            placeholder="Search by content or product name (Nicorandil, Rosuvastatin, etc.)"
             className="w-full rounded-full border border-border bg-card py-3.5 pl-12 pr-12 text-sm text-foreground shadow-xs outline-none transition-all placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 sm:text-base"
           />
           {search && (
@@ -135,7 +128,7 @@ export function TherapiesPreview({
 
         <div className="mt-5 flex flex-wrap gap-2" aria-label="Filter by condition">
           {CONDITION_FILTERS.map((condition) => {
-            const Icon = conditionIcons[condition.id] ?? Pill
+            const Icon = Pill
             const isSelected = selectedCondition === condition.id
             return (
               <button
@@ -186,6 +179,18 @@ export function TherapiesPreview({
           </div>
         )}
 
+        <div className="mb-3 flex justify-end">
+          <Button
+            variant="outline"
+            size="lg"
+            type="button"
+            onClick={() => downloadCategoryList(selectedCondition)}
+          >
+            <Download aria-hidden="true" />
+            {selectedCondition === 'All' ? 'Download full list' : `Download ${selectedCondition} list`}
+          </Button>
+        </div>
+
         {filteredMedicines.length === 0 ? (
           <div className="mt-8 rounded-xl border border-dashed border-border bg-secondary/40 p-10 text-center">
             <p className="font-serif text-lg text-foreground">
@@ -215,22 +220,32 @@ export function TherapiesPreview({
             </div>
           </div>
         ) : (
-          <div className="mt-6 divide-y divide-border overflow-hidden rounded-xl border border-border bg-card shadow-xs">
-            {/* Desktop Column Header */}
-            <div className="hidden grid-cols-[2.5rem_1.8fr_0.9fr_1.1fr_auto] items-center gap-4 bg-secondary/70 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground lg:grid">
+          <div className="mt-6 overflow-hidden rounded-xl border border-border bg-card shadow-xs">
+            <div
+              className={`hidden items-center gap-4 border-b border-border bg-secondary/70 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground lg:grid ${
+                selectedCondition === 'All'
+                  ? 'grid-cols-[2.5rem_1.5fr_0.8fr_1fr]'
+                  : 'grid-cols-[2.5rem_1.6fr_1fr]'
+              }`}
+            >
               <span>#</span>
-              <span>Medicine / Composition</span>
-              <span>Form &amp; Condition</span>
+              <span>Product</span>
+              {selectedCondition === 'All' ? <span>Category</span> : null}
               <span>Available Strengths</span>
-              <span className="text-right">Enquire</span>
             </div>
 
+            <div className={showFullPageHeader ? undefined : 'max-h-[95rem] overflow-y-auto'}>
+              <div className="divide-y divide-border">
             {filteredMedicines.map((med) => {
-              const isCapsule = med.dosageForm === 'Capsule'
+              const showCategory = selectedCondition === 'All'
               return (
                 <article
                   key={med.id}
-                  className="grid gap-4 p-5 transition-colors hover:bg-secondary/35 sm:p-6 lg:grid-cols-[2.5rem_1.8fr_0.9fr_1.1fr_auto] lg:items-center"
+                  className={`grid gap-3 p-5 transition-colors hover:bg-secondary/35 sm:p-6 lg:items-center ${
+                    showCategory
+                      ? 'lg:grid-cols-[2.5rem_1.5fr_0.8fr_1fr]'
+                      : 'lg:grid-cols-[2.5rem_1.6fr_1fr]'
+                  }`}
                 >
                   <span className="hidden font-mono text-xs font-semibold text-muted-foreground lg:inline">
                     {med.id}
@@ -241,62 +256,46 @@ export function TherapiesPreview({
                       <span className="font-mono text-xs font-semibold text-muted-foreground lg:hidden">
                         #{med.id}
                       </span>
-                      <h3 className="font-serif text-lg font-bold text-card-foreground">
-                        {med.name}
-                      </h3>
+                      <h3 className="font-serif text-lg font-bold text-card-foreground">{med.name}</h3>
                     </div>
-                    <p className="mt-1 text-xs font-medium text-primary">
-                      {med.therapeuticCategory}
-                    </p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                      {med.clinicalUse}
-                    </p>
+                    {showCategory ? (
+                      <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-primary lg:hidden">
+                        {med.category}
+                      </p>
+                    ) : null}
+                    {med.specification ? (
+                      <p className="mt-1 text-sm text-muted-foreground">{med.specification}</p>
+                    ) : null}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2 lg:flex-col lg:items-start">
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${
-                        isCapsule
-                          ? 'bg-accent text-accent-foreground'
-                          : 'bg-primary/15 text-foreground'
-                      }`}
-                    >
-                      <Pill className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-                      {med.dosageForm}
-                    </span>
-                    <span className="text-xs font-medium text-muted-foreground">
-                      {med.conditionTag}
-                    </span>
-                  </div>
+                  {showCategory ? (
+                    <p className="hidden text-sm font-medium text-foreground lg:block">{med.category}</p>
+                  ) : null}
 
                   <div>
-                    <span className="block text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground lg:hidden">
-                      Strengths
-                    </span>
-                    <div className="mt-1 flex flex-wrap gap-1.5 lg:mt-0">
-                      {med.strengths.map((str) => (
-                        <span
-                          key={str}
-                          className="rounded-md border border-border bg-background px-2.5 py-1 font-mono text-xs font-semibold text-foreground"
-                        >
-                          {str}
+                    {med.strengths.length > 0 ? (
+                      <>
+                        <span className="block text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground lg:hidden">
+                          Available Strengths
                         </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-start gap-2 pt-2 lg:justify-end lg:pt-0">
-                    <Link
-                      href={`/contact?topic=partnership&medicine=${encodeURIComponent(med.fullTitle)}`}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
-                    >
-                      Stockist / Doctor Enquiry
-                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                    </Link>
+                        <div className="mt-1 flex flex-wrap gap-1.5 lg:mt-0">
+                          {med.strengths.map((strength) => (
+                            <span
+                              key={strength}
+                              className="rounded-md border border-border bg-background px-2.5 py-1 font-mono text-xs font-semibold text-foreground"
+                            >
+                              {strength}
+                            </span>
+                          ))}
+                        </div>
+                      </>
+                    ) : null}
                   </div>
                 </article>
               )
             })}
+              </div>
+            </div>
           </div>
         )}
 
@@ -311,35 +310,18 @@ export function TherapiesPreview({
                 Looking for a specific molecule or regional distribution line?
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Alongside our Cardiac, Pain, and Neuro formulations, we are actively adding lines across{' '}
-                <span className="font-medium text-foreground">
-                  {PORTFOLIO_DEVELOPMENT.map((d) => d.name).join(', ')}
-                </span>
-                . Talk to us about distributor availability or prescriber product dossiers.
+                If a molecule is not on this list, talk to us.
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <Button
-                nativeButton={false}
-                render={<Link href="/partnerships" />}
-              >
-                For Distributors &amp; PCD
-                <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-              </Button>
-              <Button
-                variant="outline"
-                nativeButton={false}
-                render={<Link href="/contact?topic=medical-information" />}
-              >
-                Request Prescriber Info
-              </Button>
-            </div>
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/contact" />}
+            >
+              Contact Us
+            </Button>
           </div>
-
-          <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
-            Note: Prescription products only. Final formulations, pack sizes, and manufacturing specifications are subject to regulatory approval.
-          </p>
         </div>
       </div>
     </section>

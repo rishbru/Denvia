@@ -8,10 +8,8 @@ import { Button } from '@/components/ui/button'
 
 const links = [
   { href: '/therapies', label: 'Browse Medicines' },
-  { href: '/partnerships', label: 'For Distributors' },
-  { href: '/#about', label: 'About' },
-  { href: '/board-of-directors', label: 'Board' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/partnerships', label: 'Why Partner with Us' },
+  { href: '/about', label: 'Who We Are' },
 ]
 
 const linkClassName =
@@ -51,9 +49,9 @@ export function SiteHeader() {
             size="sm"
             className="rounded-full px-5 text-[0.925rem] font-semibold"
             nativeButton={false}
-            render={<Link href="/contact?topic=partnership" />}
+            render={<Link href="/contact" />}
           >
-            Partner with us
+            Contact Us
             <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
@@ -86,9 +84,9 @@ export function SiteHeader() {
               size="sm"
               className="mt-2 w-full rounded-full"
               nativeButton={false}
-              render={<Link href="/contact?topic=partnership" onClick={() => setOpen(false)} />}
+              render={<Link href="/contact" onClick={() => setOpen(false)} />}
             >
-              Partner with us
+              Contact Us
               <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
             </Button>
           </nav>

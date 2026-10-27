@@ -16,7 +16,7 @@ export function Hero() {
               <span className="text-primary">Dependable access across India.</span>
             </h1>
             <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-accent-foreground/85 sm:text-lg">
-              Prescription medicines for Cardiac, Pain, and Neuro care.
+              Making high-quality prescription medicine accessible, reliable, and affordable across India.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -31,7 +31,7 @@ export function Hero() {
                 nativeButton={false}
                 render={<Link href="/partnerships" />}
               >
-                For Distributors
+                Why Partner with Us
               </Button>
             </div>
 
